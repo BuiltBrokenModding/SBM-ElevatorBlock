@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "aaa",
+    "aba",
+    "aaa"
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:wool",
+	  "data": 10
+    },
+    "b":{
+      "item": "minecraft:ender_pearl"
+	}
+  },
+  "result": {
+    "item": "elevators:elevator",
+	"data": 10,
+	"count": 2
+  }
+}

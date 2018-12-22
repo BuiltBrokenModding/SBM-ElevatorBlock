@@ -1,0 +1,95 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "cube_all",
+		"textures": {
+			"all": "elevators:blocks/white"
+		}
+	},
+	"variants": {
+		"color": {
+			"white": {
+				"textures": {
+					"all": "elevators:blocks/white"
+				}
+			},
+			"orange": {
+				"textures": {
+					"all": "elevators:blocks/orange"
+				}
+			},
+			"magenta": {
+				"textures": {
+					"all": "elevators:blocks/magenta"
+				}
+			},
+			"light_blue": {
+				"textures": {
+					"all": "elevators:blocks/light_blue"
+				}
+			},
+			"yellow": {
+				"textures": {
+					"all": "elevators:blocks/yellow"
+				}
+			},
+			"lime": {
+				"textures": {
+					"all": "elevators:blocks/lime"
+				}
+			},
+			"pink": {
+				"textures": {
+					"all": "elevators:blocks/pink"
+				}
+			},
+			"gray": {
+				"textures": {
+					"all": "elevators:blocks/gray"
+				}
+			},
+			"silver": {
+				"textures": {
+					"all": "elevators:blocks/silver"
+				}
+			},
+			"cyan": {
+				"textures": {
+					"all": "elevators:blocks/cyan"
+				}
+			},
+			"purple": {
+				"textures": {
+					"all": "elevators:blocks/purple"
+				}
+			},
+			"blue": {
+				"textures": {
+					"all": "elevators:blocks/blue"
+				}
+			},
+			"brown": {
+				"textures": {
+					"all": "elevators:blocks/brown"
+				}
+			},
+			"green": {
+				"textures": {
+					"all": "elevators:blocks/green"
+				}
+			},
+			"red": {
+				"textures": {
+					"all": "elevators:blocks/red"
+				}
+			},
+			"black": {
+				"textures": {
+					"all": "elevators:blocks/black"
+				}
+			}
+		},
+		"normal": [{}],
+		"inventory": [{}]
+	}
+}

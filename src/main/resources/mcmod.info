@@ -1,0 +1,10 @@
+[{
+	"modid": "elevators",
+	"name": "Elevators",
+	"description": "Single Elevator Block",
+	"version": "${version}",
+	"mcversion": "1.12.2",
+	"url": "",
+	"authorList": ["TheRealp455w0rd"],
+	"logoFile": ""
+}]
