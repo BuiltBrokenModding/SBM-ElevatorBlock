@@ -1,2 +1,26 @@
-tile.elevators:elevator.name=Elevator
+
+## Unused
+tile.sbmelevators:elevator.name=Elevator Pad
+
+## Colors
+tile.sbmelevators:elevator.white.name=White Elevator Pad
+tile.sbmelevators:elevator.orange.name=Orange Elevator Pad
+tile.sbmelevators:elevator.magenta.name=Magenta Elevator Pad
+tile.sbmelevators:elevator.lightBlue.name=Light-Blue Elevator Pad
+tile.sbmelevators:elevator.yellow.name=Yellow Elevator Pad
+tile.sbmelevators:elevator.lime.name=Lime Elevator Pad
+tile.sbmelevators:elevator.pink.name=Pink Elevator Pad
+tile.sbmelevators:elevator.gray.name=Gray Elevator Pad
+tile.sbmelevators:elevator.silver.name=Silver Elevator Pad
+tile.sbmelevators:elevator.cyan.name=Cyan Elevator Pad
+tile.sbmelevators:elevator.purple.name=Purple Elevator Pad
+tile.sbmelevators:elevator.blue.name=Blue Elevator Pad
+tile.sbmelevators:elevator.brown.name=Brown Elevator Pad
+tile.sbmelevators:elevator.green.name=Green Elevator Pad
+tile.sbmelevators:elevator.red.name=Red Elevator Pad
+tile.sbmelevators:elevator.black.name=Black Elevator Pad
+
+## Sounds
 elevators.subtitle.elevator_used=Player used elevator
+
+## Config
