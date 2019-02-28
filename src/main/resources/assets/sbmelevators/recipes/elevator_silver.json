@@ -8,15 +8,15 @@
   "key": {
     "a": {
       "item": "minecraft:wool",
-	  "data": 14
+	  "data": 8
     },
     "b":{
       "item": "minecraft:ender_pearl"
 	}
   },
   "result": {
-    "item": "elevators:elevator",
-	"data": 14,
+    "item": "sbmelevators:elevator",
+	"data": 8,
 	"count": 2
   }
 }
