@@ -15,3 +15,13 @@ build
 hs_err_pid*
 
 maven.bat
+
+SBM-Elevator-Block\.txt
+
+Elevators\.iws
+
+Elevators\.ipr
+
+Elevators\.iml
+
+out/
