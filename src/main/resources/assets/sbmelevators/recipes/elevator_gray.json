@@ -14,6 +14,7 @@
       "item": "minecraft:ender_pearl"
 	}
   },
+  "group": "sbmelevators:elevator",
   "result": {
     "item": "sbmelevators:elevator",
 	"data": 7,
