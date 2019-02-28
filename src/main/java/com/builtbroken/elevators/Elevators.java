@@ -1,5 +1,6 @@
 package com.builtbroken.elevators;
 
+import com.builtbroken.elevators.config.ConfigMain;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.material.Material;

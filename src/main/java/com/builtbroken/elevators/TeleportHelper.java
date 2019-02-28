@@ -1,5 +1,6 @@
 package com.builtbroken.elevators;
 
+import com.builtbroken.elevators.config.ConfigMain;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,7 +28,7 @@ public class TeleportHelper
      * @param player
      * @param direction
      */
-    public static void tryToTeleport(EntityPlayer player, MoveDirection direction)
+    public static boolean tryToTeleport(EntityPlayer player, MoveDirection direction)
     {
         final World world = player.getEntityWorld();
         final BlockPos fromPos = getPosUnderPlayer(player);
@@ -36,18 +37,42 @@ public class TeleportHelper
 
         if (toPos != null)
         {
+            //Check XP cost
+            final int xp_cost = getXPCost(Math.abs(fromPos.getY() - toPos.getY()));
+            if (!player.capabilities.isCreativeMode && player.experienceTotal <= xp_cost)
+            {
+                return false;
+            }
+
             //Set position TODO fire event to hook and block
             player.setPositionAndUpdate(toPos.getX() + 0.5f, toPos.getY() + 1, toPos.getZ() + 0.5f);
             player.motionY = 0;
 
             //Trigger audio
             world.playSound(null, toPos, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+
+            if (ConfigMain.xp_consumed > 0 && !player.capabilities.isCreativeMode)
+            {
+                player.addExperience(-xp_cost);
+            }
+            return true;
         }
         else
         {
             //TODO play failed audio with message
         }
+        return false;
     }
+
+    public static int getXPCost(int distance)
+    {
+        if (ConfigMain.xp_consumed > 0)
+        {
+            return ConfigMain.xp_per_distance ? ConfigMain.xp_consumed * distance : ConfigMain.xp_consumed;
+        }
+        return 0;
+    }
+
 
     public static BlockPos getNearestElevator(World world, IBlockState fromState, BlockPos elevatorPos, MoveDirection direction)
     {
@@ -61,9 +86,23 @@ public class TeleportHelper
             {
                 return null;
             }
-            if (isElevator(currentState) && isSameType(currentState, fromState) && isBlockSafeToTeleportTo(world, currentPos) && spaceBetweenElevators >= ConfigMain.spaceBetweenElevators)
+            //Check if elevator is valid
+            if (isElevator(currentState) && isSameType(currentState, fromState) && isBlockSafeToTeleportTo(world, currentPos))
             {
-                return currentPos;
+                //Check that spacing is good
+                if (spaceBetweenElevators >= ConfigMain.min_spacing && (spaceBetweenElevators <= ConfigMain.max_spacing || ConfigMain.max_spacing < ConfigMain.min_spacing))
+                {
+                    return currentPos;
+                }
+                else
+                {
+                    //TODO error to player to tell them the pad is setup wrong
+                    return null;
+                }
+            }
+            else
+            {
+                //TODO error to player to tell them the pad is setup wrong
             }
             spaceBetweenElevators++;
         }
