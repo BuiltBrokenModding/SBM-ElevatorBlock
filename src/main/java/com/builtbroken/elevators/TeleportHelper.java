@@ -41,6 +41,8 @@ public class TeleportHelper
             final int xp_cost = getXPCost(Math.abs(fromPos.getY() - toPos.getY()));
             if (!player.capabilities.isCreativeMode && player.experienceTotal <= xp_cost)
             {
+                //TODO tell the player why it failed
+                world.playSound(null, fromPos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 return false;
             }
 
@@ -59,7 +61,8 @@ public class TeleportHelper
         }
         else
         {
-            //TODO play failed audio with message
+            //TODO tell the player why it failed
+            world.playSound(null, fromPos, SoundEvents.BLOCK_STONE_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
         }
         return false;
     }

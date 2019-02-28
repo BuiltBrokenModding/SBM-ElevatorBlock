@@ -1,5 +1,5 @@
 [{
-	"modid": "elevators",
+	"modid": "sbmelevators",
 	"name": "Elevators",
 	"description": "Single Elevator Block",
 	"version": "${version}",
