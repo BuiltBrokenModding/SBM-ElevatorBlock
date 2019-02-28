@@ -8,7 +8,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemCloth;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -39,15 +38,6 @@ public class Elevators
     //Block
     @GameRegistry.ObjectHolder(value = DOMAIN + ":elevator")
     public static Block ELEVATOR_BLOCK;
-
-    public static final CreativeTabs CREATIVE_TAB = new CreativeTabs(Elevators.DOMAIN)
-    {
-        @Override
-        public ItemStack createIcon()
-        {
-            return new ItemStack(Elevators.ELEVATOR_BLOCK, 1, 0);
-        }
-    };
 
     //Audio
     public static final ResourceLocation SOUND_ID = new ResourceLocation(Elevators.DOMAIN, "teleport");
@@ -81,7 +71,7 @@ public class Elevators
         }
                 .setRegistryName(new ResourceLocation(Elevators.DOMAIN, "elevator"))
                 .setTranslationKey(Elevators.DOMAIN + ":elevator")
-                .setCreativeTab(CREATIVE_TAB)
+                .setCreativeTab(CreativeTabs.TRANSPORTATION)
                 .setHardness(0.8F);
         event.getRegistry().register(ELEVATOR_BLOCK);
     }
