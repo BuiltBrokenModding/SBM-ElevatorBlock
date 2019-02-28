@@ -1,4 +1,4 @@
-package p455w0rd.sbm.elevators;
+package com.builtbroken.elevators;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;

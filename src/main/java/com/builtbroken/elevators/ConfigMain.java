@@ -1,4 +1,4 @@
-package p455w0rd.sbm.elevators;
+package com.builtbroken.elevators;
 
 import net.minecraftforge.common.config.Config;
 
