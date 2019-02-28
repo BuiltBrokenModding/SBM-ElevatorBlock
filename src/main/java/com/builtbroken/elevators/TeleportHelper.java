@@ -3,6 +3,7 @@ package com.builtbroken.elevators;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -40,7 +41,7 @@ public class TeleportHelper
             player.motionY = 0;
 
             //Trigger audio
-            world.playSound(null, toPos, Elevators.SOUND_EVENT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            world.playSound(null, toPos, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 1.0F);
         }
         else
         {
