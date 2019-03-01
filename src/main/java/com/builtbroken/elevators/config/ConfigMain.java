@@ -2,9 +2,14 @@ package com.builtbroken.elevators.config;
 
 import com.builtbroken.elevators.Elevators;
 import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Config(modid = Elevators.DOMAIN, name = "sbm/elevators/main")
 @Config.LangKey("config." + Elevators.DOMAIN + ":main.title")
+@Mod.EventBusSubscriber(modid = Elevators.DOMAIN)
 public class ConfigMain
 {
     @Config.Name("allow_mob_spawning")
@@ -41,4 +46,13 @@ public class ConfigMain
     @Config.LangKey("config." + Elevators.DOMAIN + ":spacing.min.title")
     @Config.Comment("Max distance allowed between pads, set to -1 to not care")
     public static int max_spacing = -1;
+
+    @SubscribeEvent
+    public static void onConfigChanged(final ConfigChangedEvent.OnConfigChangedEvent event)
+    {
+        if (event.getModID().equals(Elevators.DOMAIN))
+        {
+            ConfigManager.sync(Elevators.DOMAIN, Config.Type.INSTANCE);
+        }
+    }
 }

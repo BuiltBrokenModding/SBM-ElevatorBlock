@@ -4,7 +4,9 @@ import com.builtbroken.elevators.config.ConfigMain;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.network.play.server.SPacketSetExperience;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -39,7 +41,7 @@ public class TeleportHelper
         {
             //Check XP cost
             final int xp_cost = getXPCost(Math.abs(fromPos.getY() - toPos.getY()));
-            if (!player.capabilities.isCreativeMode && player.experienceTotal <= xp_cost)
+            if (!player.capabilities.isCreativeMode && !hasEnoughXP(player, xp_cost))
             {
                 //TODO tell the player why it failed
                 world.playSound(null, fromPos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
@@ -53,9 +55,14 @@ public class TeleportHelper
             //Trigger audio
             world.playSound(null, toPos, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 1.0F);
 
-            if (ConfigMain.xp_consumed > 0 && !player.capabilities.isCreativeMode)
+            //Consume XP
+            if (xp_cost > 0 && !player.capabilities.isCreativeMode)
             {
-                player.addExperience(-xp_cost);
+                consumeXP(player, xp_cost);
+                if (player instanceof EntityPlayerMP)
+                {
+                    ((EntityPlayerMP) player).connection.sendPacket(new SPacketSetExperience(player.experience, player.experienceTotal, player.experienceLevel));
+                }
             }
             return true;
         }
@@ -65,6 +72,54 @@ public class TeleportHelper
             world.playSound(null, fromPos, SoundEvents.BLOCK_STONE_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
         }
         return false;
+    }
+
+    public static boolean hasEnoughXP(EntityPlayer player, int amount)
+    {
+        //Cache values
+        final float experience = player.experience;
+        final int levels = player.experienceLevel;
+
+        //Run consume, this will edit the player
+        int re = consumeXP(player, amount);
+
+        //Restore from cache
+        player.experience = experience;
+        player.experienceLevel = levels;
+
+        //Return true if we consumed amount
+        if (re <= 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public static int consumeXP(EntityPlayer player, int amount)
+    {
+        int xpInBar = (int) (player.experience * player.xpBarCap());
+        do
+        {
+            if (xpInBar >= amount)
+            {
+                xpInBar -= amount;
+                player.experience = Math.min(1, Math.max(0, (float) xpInBar / (float) player.xpBarCap()));
+
+                return 0;
+            }
+            else
+            {
+                amount -= xpInBar;
+                player.experience = 0;
+                if(player.experienceLevel > 0)
+                {
+                    player.experienceLevel -= 1;
+                    xpInBar = player.xpBarCap();
+                }
+            }
+        } while (amount > 0 && (player.experienceLevel > 0 || xpInBar > 0));
+
+        return amount;
     }
 
     public static int getXPCost(int distance)
