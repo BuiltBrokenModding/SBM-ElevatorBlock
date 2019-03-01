@@ -1,0 +1,26 @@
+
+## Unused
+tile.sbmelevators:elevator.name=Ascenseur
+
+## Colors
+tile.sbmelevators:elevator.white.name=Ascenseur blanc
+tile.sbmelevators:elevator.orange.name=Ascenseur orange
+tile.sbmelevators:elevator.magenta.name=Ascenseur magenta
+tile.sbmelevators:elevator.lightBlue.name=Ascenseur bleu clair
+tile.sbmelevators:elevator.yellow.name=Ascenseur jaune
+tile.sbmelevators:elevator.lime.name=Ascenseur vert clair
+tile.sbmelevators:elevator.pink.name=Ascenseur rose
+tile.sbmelevators:elevator.gray.name=Ascenseur gris
+tile.sbmelevators:elevator.silver.name=Ascenseur gris clair
+tile.sbmelevators:elevator.cyan.name=Ascenseur cyan
+tile.sbmelevators:elevator.purple.name=Ascenseur violet
+tile.sbmelevators:elevator.blue.name=Ascenseur bleu
+tile.sbmelevators:elevator.brown.name=Ascenseur marron
+tile.sbmelevators:elevator.green.name=Ascenseur vert
+tile.sbmelevators:elevator.red.name=Ascenseur rouge
+tile.sbmelevators:elevator.black.name=Ascenseur noir
+
+## Sounds
+elevators.subtitle.elevator_used=Joueur utilise ascenseur
+
+## Config
