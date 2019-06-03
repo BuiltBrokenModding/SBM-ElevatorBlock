@@ -31,3 +31,5 @@ output/
 CompiledWith\.txt
 
 changelog\.html
+
+\.DS_Store

@@ -17,6 +17,11 @@ public class ConfigMain
     @Config.Comment("Toggles mobs spawning on the block on/off")
     public static boolean allowMobSpawning = false;
 
+    @Config.Name("allow_none_players")
+    @Config.LangKey("config." + Elevators.DOMAIN + ":allow.none.players.title")
+    @Config.Comment("Toggles allowing entities other than the player to be teleport")
+    public static boolean allowNonePlayers = true;
+
     @Config.Name("require_sight")
     @Config.LangKey("config." + Elevators.DOMAIN + ":require.sight.title")
     @Config.Comment("Toggle to require line of sight (no blocks between) each pad to allow movement")

@@ -2,6 +2,7 @@ package com.builtbroken.elevators;
 
 import com.builtbroken.elevators.config.ConfigMain;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -27,13 +28,13 @@ public class TeleportHelper
     /**
      * Tries to teleport the player up or down
      *
-     * @param player
+     * @param entity
      * @param direction
      */
-    public static boolean tryToTeleport(EntityPlayer player, MoveDirection direction)
+    public static boolean tryToTeleport(Entity entity, MoveDirection direction)
     {
-        final World world = player.getEntityWorld();
-        final BlockPos fromPos = getPosUnderPlayer(player);
+        final World world = entity.getEntityWorld();
+        final BlockPos fromPos = getPosUnderPlayer(entity);
         final IBlockState fromState = world.getBlockState(fromPos);
         final BlockPos toPos = getNearestElevator(world, fromState, fromPos, direction);
 
@@ -41,29 +42,21 @@ public class TeleportHelper
         {
             //Check XP cost
             final int xp_cost = getXPCost(Math.abs(fromPos.getY() - toPos.getY()));
-            if (!player.capabilities.isCreativeMode && !hasEnoughXP(player, xp_cost))
+            if(!checkTeleport(entity, world, fromPos, xp_cost))
             {
-                //TODO tell the player why it failed
-                world.playSound(null, fromPos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 return false;
             }
 
             //Set position TODO fire event to hook and block
-            player.setPositionAndUpdate(toPos.getX() + 0.5f, toPos.getY() + 1, toPos.getZ() + 0.5f);
-            player.motionY = 0;
+            entity.setPositionAndUpdate(toPos.getX() + 0.5f, toPos.getY() + 1, toPos.getZ() + 0.5f);
+            entity.motionY = 0;
 
             //Trigger audio
             world.playSound(null, toPos, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 1.0F);
 
             //Consume XP
-            if (xp_cost > 0 && !player.capabilities.isCreativeMode)
-            {
-                consumeXP(player, xp_cost);
-                if (player instanceof EntityPlayerMP)
-                {
-                    ((EntityPlayerMP) player).connection.sendPacket(new SPacketSetExperience(player.experience, player.experienceTotal, player.experienceLevel));
-                }
-            }
+            consumeXP(entity, xp_cost);
+
             return true;
         }
         else
@@ -72,6 +65,33 @@ public class TeleportHelper
             world.playSound(null, fromPos, SoundEvents.BLOCK_STONE_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
         }
         return false;
+    }
+
+    public static boolean checkTeleport(Entity entity, World world, BlockPos fromPos, int xp_cost)
+    {
+        if (entity instanceof EntityPlayer)
+        {
+            if(!((EntityPlayer)entity).capabilities.isCreativeMode && !hasEnoughXP((EntityPlayer)entity, xp_cost))
+            {
+                //TODO tell the player why it failed
+                world.playSound(null, fromPos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                return false;
+            }
+            return true;
+        }
+        return ConfigMain.allowNonePlayers;
+    }
+
+    public static void consumeXP(Entity entity, int xp_cost)
+    {
+        if (xp_cost > 0 && entity instanceof EntityPlayer && !((EntityPlayer)entity).capabilities.isCreativeMode)
+        {
+            consumeXP((EntityPlayer)entity, xp_cost);
+            if (entity instanceof EntityPlayerMP)
+            {
+                ((EntityPlayerMP) entity).connection.sendPacket(new SPacketSetExperience(((EntityPlayer)entity).experience, ((EntityPlayer)entity).experienceTotal, ((EntityPlayer)entity).experienceLevel));
+            }
+        }
     }
 
     public static boolean hasEnoughXP(EntityPlayer player, int amount)
@@ -167,7 +187,7 @@ public class TeleportHelper
         return null;
     }
 
-    private static BlockPos getPosUnderPlayer(EntityPlayer player)
+    private static BlockPos getPosUnderPlayer(Entity player)
     {
         int x = MathHelper.floor(player.posX);
         int y = MathHelper.floor(player.getEntityBoundingBox().minY) - 1;
