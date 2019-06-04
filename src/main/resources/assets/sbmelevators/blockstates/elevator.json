@@ -3,89 +3,191 @@
 	"defaults": {
 		"model": "cube_all",
 		"textures": {
-			"all": "sbmelevators:blocks/white"
+			"up": "sbmelevators:blocks/basic/white",
+			"down": "sbmelevators:blocks/basic/white_bottom",
+			"east": "sbmelevators:blocks/basic/white_side",
+			"west": "sbmelevators:blocks/basic/white_side",
+			"north": "sbmelevators:blocks/basic/white_side",
+			"south": "sbmelevators:blocks/basic/white_side",
+			"particle": "sbmelevators:blocks/basic/white_bottom"
 		}
 	},
 	"variants": {
 		"color": {
 			"white": {
 				"textures": {
-					"all": "sbmelevators:blocks/white"
+					"up": "sbmelevators:blocks/basic/white",
+					"down": "sbmelevators:blocks/basic/white_bottom",
+					"east": "sbmelevators:blocks/basic/white_side",
+					"west": "sbmelevators:blocks/basic/white_side",
+					"north": "sbmelevators:blocks/basic/white_side",
+					"south": "sbmelevators:blocks/basic/white_side",
+					"particle": "sbmelevators:blocks/basic/white_bottom"
 				}
 			},
 			"orange": {
 				"textures": {
-					"all": "sbmelevators:blocks/orange"
+					"up": "sbmelevators:blocks/basic/orange",
+					"down": "sbmelevators:blocks/basic/orange_bottom",
+					"east": "sbmelevators:blocks/basic/orange_side",
+					"west": "sbmelevators:blocks/basic/orange_side",
+					"north": "sbmelevators:blocks/basic/orange_side",
+					"south": "sbmelevators:blocks/basic/orange_side",
+					"particle": "sbmelevators:blocks/basic/orange_bottom"
 				}
 			},
 			"magenta": {
 				"textures": {
-					"all": "sbmelevators:blocks/magenta"
+					"up": "sbmelevators:blocks/basic/magenta",
+					"down": "sbmelevators:blocks/basic/magenta_bottom",
+					"east": "sbmelevators:blocks/basic/magenta_side",
+					"west": "sbmelevators:blocks/basic/magenta_side",
+					"north": "sbmelevators:blocks/basic/magenta_side",
+					"south": "sbmelevators:blocks/basic/magenta_side",
+					"particle": "sbmelevators:blocks/basic/magenta_bottom"
 				}
 			},
 			"light_blue": {
 				"textures": {
-					"all": "sbmelevators:blocks/light_blue"
+					"up": "sbmelevators:blocks/basic/light_blue",
+					"down": "sbmelevators:blocks/basic/light_blue_bottom",
+					"east": "sbmelevators:blocks/basic/light_blue_side",
+					"west": "sbmelevators:blocks/basic/light_blue_side",
+					"north": "sbmelevators:blocks/basic/light_blue_side",
+					"south": "sbmelevators:blocks/basic/light_blue_side",
+					"particle": "sbmelevators:blocks/basic/light_blue_bottom"
 				}
 			},
 			"yellow": {
 				"textures": {
-					"all": "sbmelevators:blocks/yellow"
+					"up": "sbmelevators:blocks/basic/yellow",
+					"down": "sbmelevators:blocks/basic/yellow_bottom",
+					"east": "sbmelevators:blocks/basic/yellow_side",
+					"west": "sbmelevators:blocks/basic/yellow_side",
+					"north": "sbmelevators:blocks/basic/yellow_side",
+					"south": "sbmelevators:blocks/basic/yellow_side",
+					"particle": "sbmelevators:blocks/basic/yellow_bottom"
 				}
 			},
 			"lime": {
 				"textures": {
-					"all": "sbmelevators:blocks/lime"
+					"up": "sbmelevators:blocks/basic/lime",
+					"down": "sbmelevators:blocks/basic/lime_bottom",
+					"east": "sbmelevators:blocks/basic/lime_side",
+					"west": "sbmelevators:blocks/basic/lime_side",
+					"north": "sbmelevators:blocks/basic/lime_side",
+					"south": "sbmelevators:blocks/basic/lime_side",
+					"particle": "sbmelevators:blocks/basic/lime_bottom"
 				}
 			},
 			"pink": {
 				"textures": {
-					"all": "sbmelevators:blocks/pink"
+					"up": "sbmelevators:blocks/basic/pink",
+					"down": "sbmelevators:blocks/basic/pink_bottom",
+					"east": "sbmelevators:blocks/basic/pink_side",
+					"west": "sbmelevators:blocks/basic/pink_side",
+					"north": "sbmelevators:blocks/basic/pink_side",
+					"south": "sbmelevators:blocks/basic/pink_side",
+					"particle": "sbmelevators:blocks/basic/pink_bottom"
 				}
 			},
 			"gray": {
 				"textures": {
-					"all": "sbmelevators:blocks/gray"
+					"up": "sbmelevators:blocks/basic/grey",
+					"down": "sbmelevators:blocks/basic/grey_bottom",
+					"east": "sbmelevators:blocks/basic/grey_side",
+					"west": "sbmelevators:blocks/basic/grey_side",
+					"north": "sbmelevators:blocks/basic/grey_side",
+					"south": "sbmelevators:blocks/basic/grey_side",
+					"particle": "sbmelevators:blocks/basic/grey_bottom"
 				}
 			},
 			"silver": {
 				"textures": {
-					"all": "sbmelevators:blocks/silver"
+					"up": "sbmelevators:blocks/basic/silver",
+					"down": "sbmelevators:blocks/basic/silver_bottom",
+					"east": "sbmelevators:blocks/basic/silver_side",
+					"west": "sbmelevators:blocks/basic/silver_side",
+					"north": "sbmelevators:blocks/basic/silver_side",
+					"south": "sbmelevators:blocks/basic/silver_side",
+					"particle": "sbmelevators:blocks/basic/silver_bottom"
 				}
 			},
 			"cyan": {
 				"textures": {
-					"all": "sbmelevators:blocks/cyan"
+					"up": "sbmelevators:blocks/basic/cyan",
+					"down": "sbmelevators:blocks/basic/cyan_bottom",
+					"east": "sbmelevators:blocks/basic/cyan_side",
+					"west": "sbmelevators:blocks/basic/cyan_side",
+					"north": "sbmelevators:blocks/basic/cyan_side",
+					"south": "sbmelevators:blocks/basic/cyan_side",
+					"particle": "sbmelevators:blocks/basic/cyan_bottom"
 				}
 			},
 			"purple": {
 				"textures": {
-					"all": "sbmelevators:blocks/purple"
+					"up": "sbmelevators:blocks/basic/purple",
+					"down": "sbmelevators:blocks/basic/purple_bottom",
+					"east": "sbmelevators:blocks/basic/purple_side",
+					"west": "sbmelevators:blocks/basic/purple_side",
+					"north": "sbmelevators:blocks/basic/purple_side",
+					"south": "sbmelevators:blocks/basic/purple_side",
+					"particle": "sbmelevators:blocks/basic/purple_bottom"
 				}
 			},
 			"blue": {
 				"textures": {
-					"all": "sbmelevators:blocks/blue"
+					"up": "sbmelevators:blocks/basic/blue",
+					"down": "sbmelevators:blocks/basic/blue_bottom",
+					"east": "sbmelevators:blocks/basic/blue_side",
+					"west": "sbmelevators:blocks/basic/blue_side",
+					"north": "sbmelevators:blocks/basic/blue_side",
+					"south": "sbmelevators:blocks/basic/blue_side",
+					"particle": "sbmelevators:blocks/basic/blue_bottom"
 				}
 			},
 			"brown": {
 				"textures": {
-					"all": "sbmelevators:blocks/brown"
+					"up": "sbmelevators:blocks/basic/brown",
+					"down": "sbmelevators:blocks/basic/brown_bottom",
+					"east": "sbmelevators:blocks/basic/brown_side",
+					"west": "sbmelevators:blocks/basic/brown_side",
+					"north": "sbmelevators:blocks/basic/brown_side",
+					"south": "sbmelevators:blocks/basic/brown_side",
+					"particle": "sbmelevators:blocks/basic/brown_bottom"
 				}
 			},
 			"green": {
 				"textures": {
-					"all": "sbmelevators:blocks/green"
+					"up": "sbmelevators:blocks/basic/green",
+					"down": "sbmelevators:blocks/basic/green_bottom",
+					"east": "sbmelevators:blocks/basic/green_side",
+					"west": "sbmelevators:blocks/basic/green_side",
+					"north": "sbmelevators:blocks/basic/green_side",
+					"south": "sbmelevators:blocks/basic/green_side",
+					"particle": "sbmelevators:blocks/basic/green_bottom"
 				}
 			},
 			"red": {
 				"textures": {
-					"all": "sbmelevators:blocks/red"
+					"up": "sbmelevators:blocks/basic/red",
+					"down": "sbmelevators:blocks/basic/red_bottom",
+					"east": "sbmelevators:blocks/basic/red_side",
+					"west": "sbmelevators:blocks/basic/red_side",
+					"north": "sbmelevators:blocks/basic/red_side",
+					"south": "sbmelevators:blocks/basic/red_side",
+					"particle": "sbmelevators:blocks/basic/red_bottom"
 				}
 			},
 			"black": {
 				"textures": {
-					"all": "sbmelevators:blocks/black"
+					"up": "sbmelevators:blocks/basic/black",
+					"down": "sbmelevators:blocks/basic/black_bottom",
+					"east": "sbmelevators:blocks/basic/black_side",
+					"west": "sbmelevators:blocks/basic/black_side",
+					"north": "sbmelevators:blocks/basic/black_side",
+					"south": "sbmelevators:blocks/basic/black_side",
+					"particle": "sbmelevators:blocks/basic/black_bottom"
 				}
 			}
 		},
