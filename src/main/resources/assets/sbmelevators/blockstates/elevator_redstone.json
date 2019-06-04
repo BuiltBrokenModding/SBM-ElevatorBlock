@@ -3,89 +3,89 @@
 	"defaults": {
 		"model": "cube_all",
 		"textures": {
-			"all": "sbmelevators:blocks/white"
+			"all": "sbmelevators:blocks/redstone/white"
 		}
 	},
 	"variants": {
 		"color": {
 			"white": {
 				"textures": {
-					"all": "sbmelevators:blocks/white"
+					"all": "sbmelevators:blocks/redstone/white"
 				}
 			},
 			"orange": {
 				"textures": {
-					"all": "sbmelevators:blocks/orange"
+					"all": "sbmelevators:blocks/redstone/orange"
 				}
 			},
 			"magenta": {
 				"textures": {
-					"all": "sbmelevators:blocks/magenta"
+					"all": "sbmelevators:blocks/redstone/magenta"
 				}
 			},
 			"light_blue": {
 				"textures": {
-					"all": "sbmelevators:blocks/light_blue"
+					"all": "sbmelevators:blocks/redstone/light_blue"
 				}
 			},
 			"yellow": {
 				"textures": {
-					"all": "sbmelevators:blocks/yellow"
+					"all": "sbmelevators:blocks/redstone/yellow"
 				}
 			},
 			"lime": {
 				"textures": {
-					"all": "sbmelevators:blocks/lime"
+					"all": "sbmelevators:blocks/redstone/lime"
 				}
 			},
 			"pink": {
 				"textures": {
-					"all": "sbmelevators:blocks/pink"
+					"all": "sbmelevators:blocks/redstone/pink"
 				}
 			},
 			"gray": {
 				"textures": {
-					"all": "sbmelevators:blocks/gray"
+					"all": "sbmelevators:blocks/redstone/gray"
 				}
 			},
 			"silver": {
 				"textures": {
-					"all": "sbmelevators:blocks/silver"
+					"all": "sbmelevators:blocks/redstone/silver"
 				}
 			},
 			"cyan": {
 				"textures": {
-					"all": "sbmelevators:blocks/cyan"
+					"all": "sbmelevators:blocks/redstone/cyan"
 				}
 			},
 			"purple": {
 				"textures": {
-					"all": "sbmelevators:blocks/purple"
+					"all": "sbmelevators:blocks/redstone/purple"
 				}
 			},
 			"blue": {
 				"textures": {
-					"all": "sbmelevators:blocks/blue"
+					"all": "sbmelevators:blocks/redstone/blue"
 				}
 			},
 			"brown": {
 				"textures": {
-					"all": "sbmelevators:blocks/brown"
+					"all": "sbmelevators:blocks/redstone/brown"
 				}
 			},
 			"green": {
 				"textures": {
-					"all": "sbmelevators:blocks/green"
+					"all": "sbmelevators:blocks/redstone/green"
 				}
 			},
 			"red": {
 				"textures": {
-					"all": "sbmelevators:blocks/red"
+					"all": "sbmelevators:blocks/redstone/red"
 				}
 			},
 			"black": {
 				"textures": {
-					"all": "sbmelevators:blocks/black"
+					"all": "sbmelevators:blocks/redstone/black"
 				}
 			}
 		},

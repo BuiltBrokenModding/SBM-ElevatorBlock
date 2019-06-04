@@ -1,0 +1,10 @@
+{
+	"output": "./../src/main/resources/assets/sbmelevators/textures/blocks/redstone/",
+	"merge": false,
+	"base" : [
+		"./../src/main/resources/assets/sbmelevators/textures/blocks/basic/"
+	],
+	"merge" : [
+		"./parts"
+	]
+}
