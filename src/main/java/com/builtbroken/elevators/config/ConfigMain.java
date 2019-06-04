@@ -17,10 +17,10 @@ public class ConfigMain
     @Config.Comment("Toggles mobs spawning on the block on/off")
     public static boolean allowMobSpawning = false;
 
-    @Config.Name("allow_none_players")
-    @Config.LangKey("config." + Elevators.DOMAIN + ":allow.none.players.title")
-    @Config.Comment("Toggles allowing entities other than the player to be teleport")
-    public static boolean allowNonePlayers = true;
+    @Config.Name("allow_any_entity")
+    @Config.LangKey("config." + Elevators.DOMAIN + ":allow.any.entity.title")
+    @Config.Comment("Toggles allowing entities other than the player to be teleport. Only works for automatic teleporters.")
+    public static boolean allowAnyEntity = true;
 
     @Config.Name("require_sight")
     @Config.LangKey("config." + Elevators.DOMAIN + ":require.sight.title")
@@ -48,7 +48,7 @@ public class ConfigMain
     public static int min_spacing = 3;
 
     @Config.Name("max_spacing")
-    @Config.LangKey("config." + Elevators.DOMAIN + ":spacing.min.title")
+    @Config.LangKey("config." + Elevators.DOMAIN + ":spacing.max.title")
     @Config.Comment("Max distance allowed between pads, set to -1 to not care")
     public static int max_spacing = -1;
 

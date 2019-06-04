@@ -83,7 +83,7 @@ public class TeleportHelper
             }
             return true;
         }
-        return ConfigMain.allowNonePlayers;
+        return ConfigMain.allowAnyEntity;
     }
 
     public static void consumeXP(Entity entity, int xp_cost)
