@@ -1,5 +1,8 @@
 package com.builtbroken.elevators;
 
+import com.builtbroken.elevators.content.BlockElevator;
+import com.builtbroken.elevators.content.BlockElevatorRedstone;
+import com.builtbroken.elevators.logic.PacketTryMovement;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -33,6 +36,9 @@ public class Elevators
     @GameRegistry.ObjectHolder(value = DOMAIN + ":elevator")
     public static Block ELEVATOR_BLOCK;
 
+    @GameRegistry.ObjectHolder(value = DOMAIN + ":elevator_redstone")
+    public static Block ELEVATOR_BLOCK_REDSTONE;
+
     //Audio
     public static final ResourceLocation SOUND_ID = new ResourceLocation(Elevators.DOMAIN, "teleport");
     public static final SoundEvent SOUND_EVENT = new SoundEvent(SOUND_ID).setRegistryName(SOUND_ID);
@@ -61,12 +67,20 @@ public class Elevators
                 .setCreativeTab(CreativeTabs.TRANSPORTATION)
                 .setHardness(0.8F);
         event.getRegistry().register(ELEVATOR_BLOCK);
+
+        ELEVATOR_BLOCK_REDSTONE = new BlockElevatorRedstone()
+                .setRegistryName(new ResourceLocation(Elevators.DOMAIN, "elevator_redstone"))
+                .setTranslationKey(Elevators.DOMAIN + ":elevator_redstone")
+                .setCreativeTab(CreativeTabs.TRANSPORTATION)
+                .setHardness(0.8F);
+        event.getRegistry().register(ELEVATOR_BLOCK_REDSTONE);
     }
 
     @SubscribeEvent
     public static void onItemRegistryReady(final RegistryEvent.Register<Item> event)
     {
         event.getRegistry().register(new ItemCloth(ELEVATOR_BLOCK).setRegistryName(Elevators.ELEVATOR_BLOCK.getRegistryName()).setHasSubtypes(true));
+        event.getRegistry().register(new ItemCloth(ELEVATOR_BLOCK_REDSTONE).setRegistryName(Elevators.ELEVATOR_BLOCK_REDSTONE.getRegistryName()).setHasSubtypes(true));
     }
 
 }

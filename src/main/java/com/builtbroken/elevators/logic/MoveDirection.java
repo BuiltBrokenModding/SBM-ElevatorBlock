@@ -1,4 +1,4 @@
-package com.builtbroken.elevators;
+package com.builtbroken.elevators.logic;
 
 public enum MoveDirection
 {

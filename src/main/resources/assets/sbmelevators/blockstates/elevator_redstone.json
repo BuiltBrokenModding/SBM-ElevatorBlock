@@ -1,0 +1,95 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "cube_all",
+		"textures": {
+			"all": "sbmelevators:blocks/white"
+		}
+	},
+	"variants": {
+		"color": {
+			"white": {
+				"textures": {
+					"all": "sbmelevators:blocks/white"
+				}
+			},
+			"orange": {
+				"textures": {
+					"all": "sbmelevators:blocks/orange"
+				}
+			},
+			"magenta": {
+				"textures": {
+					"all": "sbmelevators:blocks/magenta"
+				}
+			},
+			"light_blue": {
+				"textures": {
+					"all": "sbmelevators:blocks/light_blue"
+				}
+			},
+			"yellow": {
+				"textures": {
+					"all": "sbmelevators:blocks/yellow"
+				}
+			},
+			"lime": {
+				"textures": {
+					"all": "sbmelevators:blocks/lime"
+				}
+			},
+			"pink": {
+				"textures": {
+					"all": "sbmelevators:blocks/pink"
+				}
+			},
+			"gray": {
+				"textures": {
+					"all": "sbmelevators:blocks/gray"
+				}
+			},
+			"silver": {
+				"textures": {
+					"all": "sbmelevators:blocks/silver"
+				}
+			},
+			"cyan": {
+				"textures": {
+					"all": "sbmelevators:blocks/cyan"
+				}
+			},
+			"purple": {
+				"textures": {
+					"all": "sbmelevators:blocks/purple"
+				}
+			},
+			"blue": {
+				"textures": {
+					"all": "sbmelevators:blocks/blue"
+				}
+			},
+			"brown": {
+				"textures": {
+					"all": "sbmelevators:blocks/brown"
+				}
+			},
+			"green": {
+				"textures": {
+					"all": "sbmelevators:blocks/green"
+				}
+			},
+			"red": {
+				"textures": {
+					"all": "sbmelevators:blocks/red"
+				}
+			},
+			"black": {
+				"textures": {
+					"all": "sbmelevators:blocks/black"
+				}
+			}
+		},
+		"normal": [{}],
+		"inventory": [{}]
+	}
+}

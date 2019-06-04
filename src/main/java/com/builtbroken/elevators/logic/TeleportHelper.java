@@ -1,5 +1,6 @@
-package com.builtbroken.elevators;
+package com.builtbroken.elevators.logic;
 
+import com.builtbroken.elevators.Elevators;
 import com.builtbroken.elevators.config.ConfigMain;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -34,35 +35,38 @@ public class TeleportHelper
     public static boolean tryToTeleport(Entity entity, MoveDirection direction)
     {
         final World world = entity.getEntityWorld();
-        final BlockPos fromPos = getPosUnderPlayer(entity);
+        final BlockPos fromPos = getPosUnderEntity(entity);
         final IBlockState fromState = world.getBlockState(fromPos);
-        final BlockPos toPos = getNearestElevator(world, fromState, fromPos, direction);
-
-        if (toPos != null)
+        if(isElevator(fromState))
         {
-            //Check XP cost
-            final int xp_cost = getXPCost(Math.abs(fromPos.getY() - toPos.getY()));
-            if(!checkTeleport(entity, world, fromPos, xp_cost))
+            final BlockPos toPos = getNearestElevator(world, fromState, fromPos, direction);
+
+            if (toPos != null)
             {
-                return false;
+                //Check XP cost
+                final int xp_cost = getXPCost(Math.abs(fromPos.getY() - toPos.getY()));
+                if (!checkTeleport(entity, world, fromPos, xp_cost))
+                {
+                    return false;
+                }
+
+                //Set position TODO fire event to hook and block
+                entity.setPositionAndUpdate(toPos.getX() + 0.5f, toPos.getY() + 1, toPos.getZ() + 0.5f);
+                entity.motionY = 0;
+
+                //Trigger audio
+                world.playSound(null, toPos, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+
+                //Consume XP
+                consumeXP(entity, xp_cost);
+
+                return true;
             }
-
-            //Set position TODO fire event to hook and block
-            entity.setPositionAndUpdate(toPos.getX() + 0.5f, toPos.getY() + 1, toPos.getZ() + 0.5f);
-            entity.motionY = 0;
-
-            //Trigger audio
-            world.playSound(null, toPos, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 1.0F);
-
-            //Consume XP
-            consumeXP(entity, xp_cost);
-
-            return true;
-        }
-        else
-        {
-            //TODO tell the player why it failed
-            world.playSound(null, fromPos, SoundEvents.BLOCK_STONE_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            else
+            {
+                //TODO tell the player why it failed
+                world.playSound(null, fromPos, SoundEvents.BLOCK_STONE_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            }
         }
         return false;
     }
@@ -154,16 +158,19 @@ public class TeleportHelper
 
     public static BlockPos getNearestElevator(World world, IBlockState fromState, BlockPos elevatorPos, MoveDirection direction)
     {
-        BlockPos startPos = direction == MoveDirection.UP ? elevatorPos.up(3) : elevatorPos.down(3);
+        final BlockPos startPos = direction == MoveDirection.UP ? elevatorPos.up(3) : elevatorPos.down(3);
         int spaceBetweenElevators = 2;
+
         for (int i = startPos.getY(); direction == MoveDirection.UP ? i < 256 : i > 0; i += (direction == MoveDirection.UP ? 1 : -1))
         {
+            //Check that we have a valid match
             BlockPos currentPos = new BlockPos(elevatorPos.getX(), i, elevatorPos.getZ());
             IBlockState currentState = world.getBlockState(currentPos);
             if (!isSameType(currentState, fromState) && ConfigMain.requireClearLineOfSight && !isBlockPassable(world, currentState, currentPos))
             {
                 return null;
             }
+
             //Check if elevator is valid
             if (isElevator(currentState) && isSameType(currentState, fromState) && isBlockSafeToTeleportTo(world, currentPos))
             {
@@ -187,30 +194,32 @@ public class TeleportHelper
         return null;
     }
 
-    private static BlockPos getPosUnderPlayer(Entity player)
+    public static BlockPos getPosUnderEntity(Entity entity)
     {
-        int x = MathHelper.floor(player.posX);
-        int y = MathHelper.floor(player.getEntityBoundingBox().minY) - 1;
-        int z = MathHelper.floor(player.posZ);
+        int x = MathHelper.floor(entity.posX);
+        int y = MathHelper.floor(entity.getEntityBoundingBox().minY) - 1;
+        int z = MathHelper.floor(entity.posZ);
         return new BlockPos(x, y, z);
     }
 
-    private static boolean isBlockSafeToTeleportTo(World world, BlockPos pos)
+    public static boolean isBlockSafeToTeleportTo(World world, BlockPos pos)
     {
         return world.isAirBlock(pos.up()) && world.isAirBlock(pos.up(2));
+        //TODO change to collision check to allow buttons and signs
     }
 
-    private static boolean isBlockPassable(World world, IBlockState blockState, BlockPos pos)
+    public static boolean isBlockPassable(World world, IBlockState blockState, BlockPos pos)
     {
         return world.isAirBlock(pos);
+        //TODO change to collision check to allow buttons and signs
     }
 
-    private static boolean isSameType(IBlockState fromState, IBlockState toState)
+    public static boolean isSameType(IBlockState fromState, IBlockState toState)
     {
         return ConfigMain.mustBeSameColor ? fromState == toState : fromState.getBlock() == toState.getBlock();
     }
 
-    private static boolean isElevator(IBlockState blockState)
+    public static boolean isElevator(IBlockState blockState)
     {
         return blockState.getBlock() == Elevators.ELEVATOR_BLOCK;
     }

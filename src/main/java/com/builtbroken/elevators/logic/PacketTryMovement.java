@@ -1,4 +1,4 @@
-package com.builtbroken.elevators;
+package com.builtbroken.elevators.logic;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.FMLCommonHandler;

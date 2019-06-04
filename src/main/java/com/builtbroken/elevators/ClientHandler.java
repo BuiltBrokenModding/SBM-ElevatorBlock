@@ -1,10 +1,15 @@
 package com.builtbroken.elevators;
 
+import com.builtbroken.elevators.logic.MoveDirection;
+import com.builtbroken.elevators.logic.PacketTryMovement;
+import com.builtbroken.elevators.logic.TeleportHelper;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.InputUpdateEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -20,34 +25,62 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @EventBusSubscriber(modid = Elevators.DOMAIN, value = Side.CLIENT)
 public class ClientHandler
 {
+
     private static boolean wasCrouching;
     private static boolean wasJumping;
+
+    private static long lastClickTime = 0;
+    private static long minClickTime = 50;
 
     @SubscribeEvent
     public static void onInput(InputUpdateEvent inputEvent)
     {
-        //TODO add a delay to prevent macro spam
-        EntityPlayer player = Minecraft.getMinecraft().player;
-        if (!player.isSpectator())
+        //validate the game is running
+        if (Minecraft.getMinecraft() != null)
         {
-            if (wasCrouching != player.isSneaking())
+            //Validate the player
+            final EntityPlayer player = Minecraft.getMinecraft().player;
+            if (player != null && !player.isSpectator())
             {
-                wasCrouching = player.isSneaking();
-                if (wasCrouching)
+                //Validate the block is an elevator
+                final BlockPos fromPos = TeleportHelper.getPosUnderEntity(player);
+                final IBlockState fromState = player.world.getBlockState(fromPos);
+                if (TeleportHelper.isElevator(fromState))
                 {
-                    Elevators.NETWORK.sendToServer(new PacketTryMovement(MoveDirection.DOWN));
-                }
-            }
-            boolean jumping = TeleportHelper.isJumping(player);
-            if (wasJumping != jumping)
-            {
-                wasJumping = jumping;
-                if (wasJumping)
-                {
-                    Elevators.NETWORK.sendToServer(new PacketTryMovement(MoveDirection.UP));
+                    //Handle down movement
+                    if (wasCrouching != player.isSneaking())
+                    {
+                        wasCrouching = player.isSneaking();
+                        if (wasCrouching && checkClickTime())
+                        {
+                            Elevators.NETWORK.sendToServer(new PacketTryMovement(MoveDirection.DOWN));
+                        }
+                    }
+
+                    //Handle up movement
+                    boolean jumping = TeleportHelper.isJumping(player);
+                    if (wasJumping != jumping)
+                    {
+                        wasJumping = jumping;
+                        if (wasJumping && checkClickTime())
+                        {
+                            Elevators.NETWORK.sendToServer(new PacketTryMovement(MoveDirection.UP));
+                        }
+                    }
                 }
             }
         }
+    }
+
+    //Controls delay between clicks to prevent macro spam
+    private static boolean checkClickTime()
+    {
+        if (System.currentTimeMillis() - lastClickTime >= minClickTime)
+        {
+            lastClickTime = System.currentTimeMillis();
+            return true;
+        }
+        return false;
     }
 
     @SubscribeEvent

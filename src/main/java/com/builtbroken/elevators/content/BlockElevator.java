@@ -1,5 +1,7 @@
-package com.builtbroken.elevators;
+package com.builtbroken.elevators.content;
 
+import com.builtbroken.elevators.logic.MoveDirection;
+import com.builtbroken.elevators.logic.TeleportHelper;
 import com.builtbroken.elevators.config.ConfigMain;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockColored;
@@ -8,7 +10,6 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -25,9 +26,8 @@ import java.util.List;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 6/2/2019.
  */
-class BlockElevator extends BlockColored
+public class BlockElevator extends BlockColored
 {
-
     public BlockElevator()
     {
         super(Material.CLOTH);
@@ -42,27 +42,6 @@ class BlockElevator extends BlockColored
             return recolorBlock(worldIn, pos, facing, EnumDyeColor.byDyeDamage(heldItem.getItemDamage()));
         }
         return false;
-    }
-
-    @Override
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
-    {
-        if (!worldIn.isRemote)
-        {
-            int redstone = worldIn.getRedstonePowerFromNeighbors(pos);
-            if (redstone > 0)
-            {
-                final List<Entity> entityList = worldIn.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(pos.up()));
-                if (redstone < 7)
-                {
-                    entityList.forEach(entity -> TeleportHelper.tryToTeleport(entity, MoveDirection.DOWN));
-                }
-                else
-                {
-                    entityList.forEach(entity -> TeleportHelper.tryToTeleport(entity, MoveDirection.UP));
-                }
-            }
-        }
     }
 
     @Override
