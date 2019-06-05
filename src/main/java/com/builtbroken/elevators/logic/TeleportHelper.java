@@ -2,6 +2,7 @@ package com.builtbroken.elevators.logic;
 
 import com.builtbroken.elevators.Elevators;
 import com.builtbroken.elevators.config.ConfigMain;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -15,6 +16,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2/27/2019.
@@ -193,7 +197,7 @@ public class TeleportHelper
             final IBlockState currentState = world.getBlockState(currentPos);
 
             //Line of sight check
-            if (checkLineMovement(world, currentPos, currentState, fromState))
+            if (checkLineMovement(world, currentPos, currentState, fromState, entity))
             {
                 return null;
             }
@@ -214,10 +218,10 @@ public class TeleportHelper
         return null;
     }
 
-    public static boolean checkLineMovement(World world, BlockPos currentPos, IBlockState currentState, IBlockState fromState)
+    public static boolean checkLineMovement(World world, BlockPos currentPos, IBlockState currentState, IBlockState fromState, Entity entity)
     {
         return !isSameType(currentState, fromState) && ConfigMain.requireClearLineOfSight
-                && !isBlockPassable(world, currentState, currentPos);
+                && !isBlockPassable(world, currentState, currentPos, entity);
 
     }
 
@@ -264,9 +268,27 @@ public class TeleportHelper
                 x + (double) f, y + (double) f1, z + (double) f);
     }
 
-    public static boolean isBlockPassable(World world, IBlockState blockState, BlockPos pos)
+    public static boolean isBlockPassable(World world, IBlockState blockState, BlockPos pos, Entity entity)
     {
-        return world.isAirBlock(pos);
+        final Block block = blockState.getBlock();
+        if(!block.isCollidable() || block.isAir(blockState, world, pos))
+        {
+            return true;
+        }
+        //Check for empty bounding box
+        else if(blockState.getCollisionBoundingBox(world, pos) == Block.NULL_AABB)
+        {
+            //Attempt to get sub boxes, some blocks will do null aabb in order to have a custom shape (fence)
+            final List<AxisAlignedBB> boxes = new ArrayList();
+            blockState.addCollisionBoxToList(world, pos, getBoundingBoxAtPosition(entity, pos), boxes, entity, false);
+
+            //If empty then we have no collisions
+            if(boxes.isEmpty())
+            {
+                return true;
+            }
+        }
+        return false;
         //TODO change to collision check to allow buttons and signs
     }
 
