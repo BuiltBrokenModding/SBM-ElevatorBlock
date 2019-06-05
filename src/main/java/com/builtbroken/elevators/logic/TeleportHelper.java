@@ -8,9 +8,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.play.server.SPacketSetExperience;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -21,7 +21,9 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
  */
 public class TeleportHelper
 {
+
     public static final String NBT_LAST_TIME = Elevators.DOMAIN + ":last_teleport_time";
+
     public static boolean isJumping(EntityPlayer player) //TODO replace with AT
     {
         return ObfuscationReflectionHelper.getPrivateValue(EntityLivingBase.class, player, "field_70703_bu", "isJumping");
@@ -40,18 +42,18 @@ public class TeleportHelper
 
         //Get last teleport time
         long lastTeleportTime = 0;
-        if(entity.getEntityData().hasKey(NBT_LAST_TIME)) //TODO consider using world time instead
+        if (entity.getEntityData().hasKey(NBT_LAST_TIME)) //TODO consider using world time instead
         {
             lastTeleportTime = entity.getEntityData().getLong(NBT_LAST_TIME);
         }
 
         //Limit last teleport time
-        if(System.currentTimeMillis() - lastTeleportTime > ConfigMain.tp_delay)
+        if (System.currentTimeMillis() - lastTeleportTime > ConfigMain.tp_delay)
         {
             final IBlockState fromState = world.getBlockState(fromPos);
             if (isElevator(fromState))
             {
-                final BlockPos toPos = getNearestElevator(world, fromState, fromPos, direction);
+                final BlockPos toPos = getNearestElevator(world, fromState, fromPos, direction, entity);
 
                 if (toPos != null)
                 {
@@ -97,7 +99,7 @@ public class TeleportHelper
     {
         if (entity instanceof EntityPlayer)
         {
-            if(!((EntityPlayer)entity).capabilities.isCreativeMode && !hasEnoughXP((EntityPlayer)entity, xp_cost))
+            if (!((EntityPlayer) entity).capabilities.isCreativeMode && !hasEnoughXP((EntityPlayer) entity, xp_cost))
             {
                 //TODO tell the player why it failed
                 world.playSound(null, fromPos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
@@ -110,12 +112,12 @@ public class TeleportHelper
 
     public static void consumeXP(Entity entity, int xp_cost)
     {
-        if (xp_cost > 0 && entity instanceof EntityPlayer && !((EntityPlayer)entity).capabilities.isCreativeMode)
+        if (xp_cost > 0 && entity instanceof EntityPlayer && !((EntityPlayer) entity).capabilities.isCreativeMode)
         {
-            consumeXP((EntityPlayer)entity, xp_cost);
+            consumeXP((EntityPlayer) entity, xp_cost);
             if (entity instanceof EntityPlayerMP)
             {
-                ((EntityPlayerMP) entity).connection.sendPacket(new SPacketSetExperience(((EntityPlayer)entity).experience, ((EntityPlayer)entity).experienceTotal, ((EntityPlayer)entity).experienceLevel));
+                ((EntityPlayerMP) entity).connection.sendPacket(new SPacketSetExperience(((EntityPlayer) entity).experience, ((EntityPlayer) entity).experienceTotal, ((EntityPlayer) entity).experienceLevel));
             }
         }
     }
@@ -157,7 +159,7 @@ public class TeleportHelper
             {
                 amount -= xpInBar;
                 player.experience = 0;
-                if(player.experienceLevel > 0)
+                if (player.experienceLevel > 0)
                 {
                     player.experienceLevel -= 1;
                     xpInBar = player.xpBarCap();
@@ -178,42 +180,52 @@ public class TeleportHelper
     }
 
 
-    public static BlockPos getNearestElevator(World world, IBlockState fromState, BlockPos elevatorPos, MoveDirection direction)
+    public static BlockPos getNearestElevator(World world, IBlockState fromState, BlockPos elevatorPos, MoveDirection direction, Entity entity)
     {
-        final BlockPos startPos = direction == MoveDirection.UP ? elevatorPos.up(3) : elevatorPos.down(3);
-        int spaceBetweenElevators = 2;
+        final BlockPos startPos = direction == MoveDirection.UP ? elevatorPos.up() : elevatorPos.down();
+        int spaceBetweenElevators = 1;
 
-        for (int i = startPos.getY(); direction == MoveDirection.UP ? i < 256 : i > 0; i += (direction == MoveDirection.UP ? 1 : -1))
+        //Move up or down until we find another elevator
+        for (int y = startPos.getY(); direction.limit(world, y); y += direction.delta.getAsInt())
         {
             //Check that we have a valid match
-            BlockPos currentPos = new BlockPos(elevatorPos.getX(), i, elevatorPos.getZ());
-            IBlockState currentState = world.getBlockState(currentPos);
-            if (!isSameType(currentState, fromState) && ConfigMain.requireClearLineOfSight && !isBlockPassable(world, currentState, currentPos))
+            final BlockPos currentPos = new BlockPos(elevatorPos.getX(), y, elevatorPos.getZ());
+            final IBlockState currentState = world.getBlockState(currentPos);
+
+            //Line of sight check
+            if (checkLineMovement(world, currentPos, currentState, fromState))
             {
                 return null;
             }
 
             //Check if elevator is valid
-            if (isElevator(currentState) && isSameType(currentState, fromState) && isBlockSafeToTeleportTo(world, currentPos))
+            if (isElevator(currentState) && isSameType(currentState, fromState))
             {
-                //Check that spacing is good
-                if (spaceBetweenElevators >= ConfigMain.min_spacing && (spaceBetweenElevators <= ConfigMain.max_spacing || ConfigMain.max_spacing < ConfigMain.min_spacing))
+                if (!isDistanceValid(spaceBetweenElevators) || !isBlockSafeToTeleportTo(world, currentPos, entity))
                 {
-                    return currentPos;
-                }
-                else
-                {
-                    //TODO error to player to tell them the pad is setup wrong
+                    //TODO error to player to tell them the pad is blocked or spacing is bad
                     return null;
                 }
-            }
-            else
-            {
-                //TODO error to player to tell them the pad is setup wrong
+
+                return currentPos;
             }
             spaceBetweenElevators++;
         }
         return null;
+    }
+
+    public static boolean checkLineMovement(World world, BlockPos currentPos, IBlockState currentState, IBlockState fromState)
+    {
+        return !isSameType(currentState, fromState) && ConfigMain.requireClearLineOfSight
+                && !isBlockPassable(world, currentState, currentPos);
+
+    }
+
+    public static boolean isDistanceValid(int spaceBetweenElevators)
+    {
+        return spaceBetweenElevators >= ConfigMain.min_spacing
+                && (spaceBetweenElevators <= ConfigMain.max_spacing || ConfigMain.max_spacing < ConfigMain.min_spacing);
+
     }
 
     public static BlockPos getPosUnderEntity(Entity entity)
@@ -224,10 +236,32 @@ public class TeleportHelper
         return new BlockPos(x, y, z);
     }
 
-    public static boolean isBlockSafeToTeleportTo(World world, BlockPos pos)
+    public static boolean isBlockSafeToTeleportTo(World world, BlockPos pos, Entity entity)
     {
-        return world.isAirBlock(pos.up()) && world.isAirBlock(pos.up(2));
+        return isNotColliding(world, pos.up(), entity);
         //TODO change to collision check to allow buttons and signs
+    }
+
+    public static boolean isNotColliding(World world, BlockPos pos, Entity entity)
+    {
+        AxisAlignedBB bb = getBoundingBoxAtPosition(entity, pos);
+        return !world.containsAnyLiquid(bb)
+                && world.getCollisionBoxes(entity, bb).isEmpty()
+                && world.checkNoEntityCollision(bb, entity);
+    }
+
+    public static AxisAlignedBB getBoundingBoxAtPosition(Entity entity, BlockPos pos)
+    {
+        return getBoundingBoxAtPosition(entity, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+    }
+
+    public static AxisAlignedBB getBoundingBoxAtPosition(Entity entity, double x, double y, double z)
+    {
+        float f = entity.width / 2.0F;
+        float f1 = entity.height;
+        return new AxisAlignedBB(
+                x - (double) f, y, z - (double) f,
+                x + (double) f, y + (double) f1, z + (double) f);
     }
 
     public static boolean isBlockPassable(World world, IBlockState blockState, BlockPos pos)
