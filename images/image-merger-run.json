@@ -1,0 +1,6 @@
+{
+	"tasks" : [
+		"./merge_redstone_side.json",
+		"./merge_redstone_bottom.json"
+	]
+}
