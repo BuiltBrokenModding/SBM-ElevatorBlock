@@ -1,5 +1,6 @@
 package com.builtbroken.elevators;
 
+import com.builtbroken.elevators.config.ConfigContent;
 import com.builtbroken.elevators.content.BlockElevator;
 import com.builtbroken.elevators.content.BlockElevatorRedstone;
 import com.builtbroken.elevators.logic.PacketTryMovement;
@@ -22,6 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
 @Mod.EventBusSubscriber(modid = Elevators.DOMAIN)
 public class Elevators
 {
+
     //References
     public static final String DOMAIN = "sbmelevators";
 
@@ -61,26 +63,37 @@ public class Elevators
     @SubscribeEvent
     public static void onBlockRegistryReady(final RegistryEvent.Register<Block> event)
     {
-        ELEVATOR_BLOCK = new BlockElevator()
-                .setRegistryName(new ResourceLocation(Elevators.DOMAIN, "elevator"))
-                .setTranslationKey(Elevators.DOMAIN + ":elevator")
-                .setCreativeTab(CreativeTabs.TRANSPORTATION)
-                .setHardness(0.8F);
-        event.getRegistry().register(ELEVATOR_BLOCK);
+        if (ConfigContent.enableBasicLift)
+        {
+            ELEVATOR_BLOCK = new BlockElevator()
+                    .setRegistryName(new ResourceLocation(Elevators.DOMAIN, "elevator"))
+                    .setTranslationKey(Elevators.DOMAIN + ":elevator")
+                    .setCreativeTab(CreativeTabs.TRANSPORTATION)
+                    .setHardness(0.8F);
+            event.getRegistry().register(ELEVATOR_BLOCK);
+        }
 
-        ELEVATOR_BLOCK_REDSTONE = new BlockElevatorRedstone()
-                .setRegistryName(new ResourceLocation(Elevators.DOMAIN, "elevator_redstone"))
-                .setTranslationKey(Elevators.DOMAIN + ":elevator_redstone")
-                .setCreativeTab(CreativeTabs.TRANSPORTATION)
-                .setHardness(0.8F);
-        event.getRegistry().register(ELEVATOR_BLOCK_REDSTONE);
+        if (ConfigContent.enableRedstoneLift)
+        {
+            ELEVATOR_BLOCK_REDSTONE = new BlockElevatorRedstone()
+                    .setRegistryName(new ResourceLocation(Elevators.DOMAIN, "elevator_redstone"))
+                    .setTranslationKey(Elevators.DOMAIN + ":elevator_redstone")
+                    .setCreativeTab(CreativeTabs.TRANSPORTATION)
+                    .setHardness(0.8F);
+            event.getRegistry().register(ELEVATOR_BLOCK_REDSTONE);
+        }
     }
 
     @SubscribeEvent
     public static void onItemRegistryReady(final RegistryEvent.Register<Item> event)
     {
-        event.getRegistry().register(new ItemCloth(ELEVATOR_BLOCK).setRegistryName(Elevators.ELEVATOR_BLOCK.getRegistryName()).setHasSubtypes(true));
-        event.getRegistry().register(new ItemCloth(ELEVATOR_BLOCK_REDSTONE).setRegistryName(Elevators.ELEVATOR_BLOCK_REDSTONE.getRegistryName()).setHasSubtypes(true));
+        if (ConfigContent.enableBasicLift)
+        {
+            event.getRegistry().register(new ItemCloth(ELEVATOR_BLOCK).setRegistryName(Elevators.ELEVATOR_BLOCK.getRegistryName()).setHasSubtypes(true));
+        }
+        if (ConfigContent.enableRedstoneLift)
+        {
+            event.getRegistry().register(new ItemCloth(ELEVATOR_BLOCK_REDSTONE).setRegistryName(Elevators.ELEVATOR_BLOCK_REDSTONE.getRegistryName()).setHasSubtypes(true));
+        }
     }
-
 }

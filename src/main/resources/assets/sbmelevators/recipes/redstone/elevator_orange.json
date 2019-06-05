@@ -19,5 +19,22 @@
     "item": "sbmelevators:elevator_redstone",
     "data": 1,
     "count": 1
-  }
+  },
+  "conditions": [
+    {
+      "type": "forge:and",
+      "values": [
+        {
+          "type": "sbmelevators:exists",
+          "condition": "true",
+          "value": "sbmelevators:elevator"
+        },
+        {
+          "type": "sbmelevators:exists",
+          "condition": "true",
+          "value": "sbmelevators:elevator_redstone"
+        }
+      ]
+    }
+  ]
 }

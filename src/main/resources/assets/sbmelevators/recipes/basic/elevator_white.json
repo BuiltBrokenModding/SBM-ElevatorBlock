@@ -19,5 +19,12 @@
     "item": "sbmelevators:elevator",
 	"data": 0,
 	"count": 2
-  }
+  },
+  "conditions": [
+    {
+      "type": "sbmelevators:exists",
+      "condition": "true",
+      "value": "sbmelevators:elevator"
+    }
+  ]
 }

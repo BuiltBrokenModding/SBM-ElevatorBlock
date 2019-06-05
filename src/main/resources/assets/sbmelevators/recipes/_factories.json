@@ -1,0 +1,5 @@
+{
+  "conditions": {
+    "exists": "com.builtbroken.elevators.logic.ConditionItemExistsValue"
+  }
+}
