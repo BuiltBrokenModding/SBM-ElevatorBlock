@@ -41,7 +41,8 @@ tile.sbmelevators:elevator.redstone.black.name=Black Redstone Elevator Pad
 ## Sounds
 elevators.subtitle.elevator_used=Player used elevator
 
-## Config
+## Config Main
+config.sbmelevators:main.title=Main
 config.sbmelevators:mob.spawning.title=Enable Mob Spawning
 config.sbmelevators:allow.any.entity.title=Allow Any Entity
 config.sbmelevators:require.sight.title=Require Line of Sight
@@ -50,3 +51,8 @@ config.sbmelevators:xp.cost.title=XP Cost
 config.sbmelevators:xp.cost.distance.title=Enable XP Distance Scaling
 config.sbmelevators:spacing.min.title=Min Spacing
 config.sbmelevators:spacing.max.title=Max Spacing
+
+## Config Content
+config.sbmelevators:content.title=Content
+config.sbmelevators:elevator.basic.enable.title=Enable Basic
+config.sbmelevators:elevator.redstone.enable.title=Enable Redstone
