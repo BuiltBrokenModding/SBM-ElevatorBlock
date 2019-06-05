@@ -51,6 +51,7 @@ config.sbmelevators:xp.cost.title=XP Cost
 config.sbmelevators:xp.cost.distance.title=Enable XP Distance Scaling
 config.sbmelevators:spacing.min.title=Min Spacing
 config.sbmelevators:spacing.max.title=Max Spacing
+config.sbmelevators:teleport.delay.title=Teleport Delay
 
 ## Config Content
 config.sbmelevators:content.title=Content

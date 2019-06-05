@@ -37,6 +37,11 @@ public class ConfigMain
     @Config.Comment("XP required to use the pad, set to -1 to disable")
     public static int xp_consumed = -1;
 
+    @Config.Name("teleport_delay")
+    @Config.LangKey("config." + Elevators.DOMAIN + ":teleport.delay.title")
+    @Config.Comment("Time in miliseconds to wait until teleporting again, set to -1 to ignore")
+    public static int tp_delay = 100;
+
     @Config.Name("xp_cost_distance")
     @Config.LangKey("config." + Elevators.DOMAIN + ":xp.cost.distance.title")
     @Config.Comment("Toggle to make XP cost be based on the distance traveled.")

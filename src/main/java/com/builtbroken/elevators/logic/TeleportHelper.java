@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.play.server.SPacketSetExperience;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -20,7 +21,7 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
  */
 public class TeleportHelper
 {
-
+    public static final String NBT_LAST_TIME = Elevators.DOMAIN + ":last_teleport_time";
     public static boolean isJumping(EntityPlayer player) //TODO replace with AT
     {
         return ObfuscationReflectionHelper.getPrivateValue(EntityLivingBase.class, player, "field_70703_bu", "isJumping");
@@ -36,37 +37,58 @@ public class TeleportHelper
     {
         final World world = entity.getEntityWorld();
         final BlockPos fromPos = getPosUnderEntity(entity);
-        final IBlockState fromState = world.getBlockState(fromPos);
-        if(isElevator(fromState))
+
+        //Get last teleport time
+        long lastTeleportTime = 0;
+        if(entity.getEntityData().hasKey(NBT_LAST_TIME)) //TODO consider using world time instead
         {
-            final BlockPos toPos = getNearestElevator(world, fromState, fromPos, direction);
+            lastTeleportTime = entity.getEntityData().getLong(NBT_LAST_TIME);
+        }
 
-            if (toPos != null)
+        //Limit last teleport time
+        if(System.currentTimeMillis() - lastTeleportTime > ConfigMain.tp_delay)
+        {
+            final IBlockState fromState = world.getBlockState(fromPos);
+            if (isElevator(fromState))
             {
-                //Check XP cost
-                final int xp_cost = getXPCost(Math.abs(fromPos.getY() - toPos.getY()));
-                if (!checkTeleport(entity, world, fromPos, xp_cost))
+                final BlockPos toPos = getNearestElevator(world, fromState, fromPos, direction);
+
+                if (toPos != null)
                 {
-                    return false;
+                    //Check XP cost
+                    final int xp_cost = getXPCost(Math.abs(fromPos.getY() - toPos.getY()));
+                    if (!checkTeleport(entity, world, fromPos, xp_cost))
+                    {
+                        return false;
+                    }
+
+                    //Set position TODO fire event to hook and block
+                    entity.setPositionAndUpdate(toPos.getX() + 0.5f, toPos.getY() + 1, toPos.getZ() + 0.5f);
+                    entity.motionY = 0;
+
+                    //Save last teleport time
+                    entity.getEntityData().setLong(NBT_LAST_TIME, System.currentTimeMillis());
+
+                    //Trigger audio
+                    world.playSound(null, toPos, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+
+                    //Consume XP
+                    consumeXP(entity, xp_cost);
+
+                    return true;
                 }
-
-                //Set position TODO fire event to hook and block
-                entity.setPositionAndUpdate(toPos.getX() + 0.5f, toPos.getY() + 1, toPos.getZ() + 0.5f);
-                entity.motionY = 0;
-
-                //Trigger audio
-                world.playSound(null, toPos, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 1.0F);
-
-                //Consume XP
-                consumeXP(entity, xp_cost);
-
-                return true;
+                else
+                {
+                    //TODO tell the player why it failed
+                    world.playSound(null, fromPos, SoundEvents.BLOCK_STONE_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                }
             }
-            else
-            {
-                //TODO tell the player why it failed
-                world.playSound(null, fromPos, SoundEvents.BLOCK_STONE_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
-            }
+        }
+        else
+        {
+            //TODO tell the player why it failed
+            world.playSound(null, fromPos, SoundEvents.BLOCK_STONE_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+
         }
         return false;
     }
