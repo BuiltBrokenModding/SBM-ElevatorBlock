@@ -39,7 +39,6 @@ public class BlockElevatorRedstone extends BlockElevator
         if (!worldIn.isRemote)
         {
             int redstone = getRedstone(worldIn, pos);
-            System.out.println(redstone);
             if (redstone > 0)
             {
                 final List<Entity> entityList = worldIn.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(pos.up()));
