@@ -77,7 +77,7 @@ public class Elevators
         {
             ELEVATOR_BLOCK_REDSTONE = new BlockElevatorRedstone()
                     .setRegistryName(new ResourceLocation(Elevators.DOMAIN, "elevator_redstone"))
-                    .setTranslationKey(Elevators.DOMAIN + ":elevator_redstone")
+                    .setTranslationKey(Elevators.DOMAIN + ":elevator.redstone")
                     .setCreativeTab(CreativeTabs.TRANSPORTATION)
                     .setHardness(0.8F);
             event.getRegistry().register(ELEVATOR_BLOCK_REDSTONE);
