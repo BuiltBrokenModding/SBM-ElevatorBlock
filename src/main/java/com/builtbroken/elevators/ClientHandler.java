@@ -1,5 +1,6 @@
 package com.builtbroken.elevators;
 
+import com.builtbroken.elevators.config.ConfigContent;
 import com.builtbroken.elevators.logic.MoveDirection;
 import com.builtbroken.elevators.logic.PacketTryMovement;
 import com.builtbroken.elevators.logic.TeleportHelper;
@@ -86,9 +87,19 @@ public class ClientHandler
     @SubscribeEvent
     public static void registerModels(final ModelRegistryEvent event)
     {
-        for (EnumDyeColor color : EnumDyeColor.values())
+        if (ConfigContent.enableBasicLift)
         {
-            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(Elevators.ELEVATOR_BLOCK), color.ordinal(), new ModelResourceLocation(Elevators.ELEVATOR_BLOCK.getRegistryName(), "color=" + color.getName()));
+            for (EnumDyeColor color : EnumDyeColor.values())
+            {
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(Elevators.ELEVATOR_BLOCK), color.ordinal(), new ModelResourceLocation(Elevators.ELEVATOR_BLOCK.getRegistryName(), "color=" + color.getName()));
+            }
+        }
+        if (ConfigContent.enableRedstoneLift)
+        {
+            for (EnumDyeColor color : EnumDyeColor.values())
+            {
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(Elevators.ELEVATOR_BLOCK_REDSTONE), color.ordinal(), new ModelResourceLocation(Elevators.ELEVATOR_BLOCK_REDSTONE.getRegistryName(), "color=" + color.getName()));
+            }
         }
     }
 }

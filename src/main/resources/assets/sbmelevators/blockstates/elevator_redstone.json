@@ -3,89 +3,191 @@
 	"defaults": {
 		"model": "cube_all",
 		"textures": {
-			"all": "sbmelevators:blocks/redstone/white"
+			"up": "sbmelevators:blocks/basic/white",
+			"down": "sbmelevators:blocks/redstone/white_bottom",
+			"east": "sbmelevators:blocks/redstone/white_side",
+			"west": "sbmelevators:blocks/redstone/white_side",
+			"north": "sbmelevators:blocks/redstone/white_side",
+			"south": "sbmelevators:blocks/redstone/white_side",
+			"particle": "sbmelevators:blocks/redstone/white_bottom"
 		}
 	},
 	"variants": {
 		"color": {
 			"white": {
 				"textures": {
-					"all": "sbmelevators:blocks/redstone/white"
+					"up": "sbmelevators:blocks/basic/white",
+					"down": "sbmelevators:blocks/redstone/white_bottom",
+					"east": "sbmelevators:blocks/redstone/white_side",
+					"west": "sbmelevators:blocks/redstone/white_side",
+					"north": "sbmelevators:blocks/redstone/white_side",
+					"south": "sbmelevators:blocks/redstone/white_side",
+					"particle": "sbmelevators:blocks/redstone/white_bottom"
 				}
 			},
 			"orange": {
 				"textures": {
-					"all": "sbmelevators:blocks/redstone/orange"
+					"up": "sbmelevators:blocks/basic/orange",
+					"down": "sbmelevators:blocks/redstone/orange_bottom",
+					"east": "sbmelevators:blocks/redstone/orange_side",
+					"west": "sbmelevators:blocks/redstone/orange_side",
+					"north": "sbmelevators:blocks/redstone/orange_side",
+					"south": "sbmelevators:blocks/redstone/orange_side",
+					"particle": "sbmelevators:blocks/redstone/orange_bottom"
 				}
 			},
 			"magenta": {
 				"textures": {
-					"all": "sbmelevators:blocks/redstone/magenta"
+					"up": "sbmelevators:blocks/basic/magenta",
+					"down": "sbmelevators:blocks/redstone/magenta_bottom",
+					"east": "sbmelevators:blocks/redstone/magenta_side",
+					"west": "sbmelevators:blocks/redstone/magenta_side",
+					"north": "sbmelevators:blocks/redstone/magenta_side",
+					"south": "sbmelevators:blocks/redstone/magenta_side",
+					"particle": "sbmelevators:blocks/redstone/magenta_bottom"
 				}
 			},
 			"light_blue": {
 				"textures": {
-					"all": "sbmelevators:blocks/redstone/light_blue"
+					"up": "sbmelevators:blocks/basic/light_blue",
+					"down": "sbmelevators:blocks/redstone/light_blue_bottom",
+					"east": "sbmelevators:blocks/redstone/light_blue_side",
+					"west": "sbmelevators:blocks/redstone/light_blue_side",
+					"north": "sbmelevators:blocks/redstone/light_blue_side",
+					"south": "sbmelevators:blocks/redstone/light_blue_side",
+					"particle": "sbmelevators:blocks/redstone/light_blue_bottom"
 				}
 			},
 			"yellow": {
 				"textures": {
-					"all": "sbmelevators:blocks/redstone/yellow"
+					"up": "sbmelevators:blocks/basic/yellow",
+					"down": "sbmelevators:blocks/redstone/yellow_bottom",
+					"east": "sbmelevators:blocks/redstone/yellow_side",
+					"west": "sbmelevators:blocks/redstone/yellow_side",
+					"north": "sbmelevators:blocks/redstone/yellow_side",
+					"south": "sbmelevators:blocks/redstone/yellow_side",
+					"particle": "sbmelevators:blocks/redstone/yellow_bottom"
 				}
 			},
 			"lime": {
 				"textures": {
-					"all": "sbmelevators:blocks/redstone/lime"
+					"up": "sbmelevators:blocks/basic/lime",
+					"down": "sbmelevators:blocks/redstone/lime_bottom",
+					"east": "sbmelevators:blocks/redstone/lime_side",
+					"west": "sbmelevators:blocks/redstone/lime_side",
+					"north": "sbmelevators:blocks/redstone/lime_side",
+					"south": "sbmelevators:blocks/redstone/lime_side",
+					"particle": "sbmelevators:blocks/redstone/lime_bottom"
 				}
 			},
 			"pink": {
 				"textures": {
-					"all": "sbmelevators:blocks/redstone/pink"
+					"up": "sbmelevators:blocks/basic/pink",
+					"down": "sbmelevators:blocks/redstone/pink_bottom",
+					"east": "sbmelevators:blocks/redstone/pink_side",
+					"west": "sbmelevators:blocks/redstone/pink_side",
+					"north": "sbmelevators:blocks/redstone/pink_side",
+					"south": "sbmelevators:blocks/redstone/pink_side",
+					"particle": "sbmelevators:blocks/redstone/pink_bottom"
 				}
 			},
 			"gray": {
 				"textures": {
-					"all": "sbmelevators:blocks/redstone/gray"
+					"up": "sbmelevators:blocks/basic/gray",
+					"down": "sbmelevators:blocks/redstone/gray_bottom",
+					"east": "sbmelevators:blocks/redstone/gray_side",
+					"west": "sbmelevators:blocks/redstone/gray_side",
+					"north": "sbmelevators:blocks/redstone/gray_side",
+					"south": "sbmelevators:blocks/redstone/gray_side",
+					"particle": "sbmelevators:blocks/redstone/gray_bottom"
 				}
 			},
 			"silver": {
 				"textures": {
-					"all": "sbmelevators:blocks/redstone/silver"
+					"up": "sbmelevators:blocks/basic/silver",
+					"down": "sbmelevators:blocks/redstone/silver_bottom",
+					"east": "sbmelevators:blocks/redstone/silver_side",
+					"west": "sbmelevators:blocks/redstone/silver_side",
+					"north": "sbmelevators:blocks/redstone/silver_side",
+					"south": "sbmelevators:blocks/redstone/silver_side",
+					"particle": "sbmelevators:blocks/redstone/silver_bottom"
 				}
 			},
 			"cyan": {
 				"textures": {
-					"all": "sbmelevators:blocks/redstone/cyan"
+					"up": "sbmelevators:blocks/basic/cyan",
+					"down": "sbmelevators:blocks/redstone/cyan_bottom",
+					"east": "sbmelevators:blocks/redstone/cyan_side",
+					"west": "sbmelevators:blocks/redstone/cyan_side",
+					"north": "sbmelevators:blocks/redstone/cyan_side",
+					"south": "sbmelevators:blocks/redstone/cyan_side",
+					"particle": "sbmelevators:blocks/redstone/cyan_bottom"
 				}
 			},
 			"purple": {
 				"textures": {
-					"all": "sbmelevators:blocks/redstone/purple"
+					"up": "sbmelevators:blocks/basic/purple",
+					"down": "sbmelevators:blocks/redstone/purple_bottom",
+					"east": "sbmelevators:blocks/redstone/purple_side",
+					"west": "sbmelevators:blocks/redstone/purple_side",
+					"north": "sbmelevators:blocks/redstone/purple_side",
+					"south": "sbmelevators:blocks/redstone/purple_side",
+					"particle": "sbmelevators:blocks/redstone/purple_bottom"
 				}
 			},
 			"blue": {
 				"textures": {
-					"all": "sbmelevators:blocks/redstone/blue"
+					"up": "sbmelevators:blocks/basic/blue",
+					"down": "sbmelevators:blocks/redstone/blue_bottom",
+					"east": "sbmelevators:blocks/redstone/blue_side",
+					"west": "sbmelevators:blocks/redstone/blue_side",
+					"north": "sbmelevators:blocks/redstone/blue_side",
+					"south": "sbmelevators:blocks/redstone/blue_side",
+					"particle": "sbmelevators:blocks/redstone/blue_bottom"
 				}
 			},
 			"brown": {
 				"textures": {
-					"all": "sbmelevators:blocks/redstone/brown"
+					"up": "sbmelevators:blocks/basic/brown",
+					"down": "sbmelevators:blocks/redstone/brown_bottom",
+					"east": "sbmelevators:blocks/redstone/brown_side",
+					"west": "sbmelevators:blocks/redstone/brown_side",
+					"north": "sbmelevators:blocks/redstone/brown_side",
+					"south": "sbmelevators:blocks/redstone/brown_side",
+					"particle": "sbmelevators:blocks/redstone/brown_bottom"
 				}
 			},
 			"green": {
 				"textures": {
-					"all": "sbmelevators:blocks/redstone/green"
+					"up": "sbmelevators:blocks/basic/green",
+					"down": "sbmelevators:blocks/redstone/green_bottom",
+					"east": "sbmelevators:blocks/redstone/green_side",
+					"west": "sbmelevators:blocks/redstone/green_side",
+					"north": "sbmelevators:blocks/redstone/green_side",
+					"south": "sbmelevators:blocks/redstone/green_side",
+					"particle": "sbmelevators:blocks/redstone/green_bottom"
 				}
 			},
 			"red": {
 				"textures": {
-					"all": "sbmelevators:blocks/redstone/red"
+					"up": "sbmelevators:blocks/basic/red",
+					"down": "sbmelevators:blocks/redstone/red_bottom",
+					"east": "sbmelevators:blocks/redstone/red_side",
+					"west": "sbmelevators:blocks/redstone/red_side",
+					"north": "sbmelevators:blocks/redstone/red_side",
+					"south": "sbmelevators:blocks/redstone/red_side",
+					"particle": "sbmelevators:blocks/redstone/red_bottom"
 				}
 			},
 			"black": {
 				"textures": {
-					"all": "sbmelevators:blocks/redstone/black"
+					"up": "sbmelevators:blocks/basic/black",
+					"down": "sbmelevators:blocks/redstone/black_bottom",
+					"east": "sbmelevators:blocks/redstone/black_side",
+					"west": "sbmelevators:blocks/redstone/black_side",
+					"north": "sbmelevators:blocks/redstone/black_side",
+					"south": "sbmelevators:blocks/redstone/black_side",
+					"particle": "sbmelevators:blocks/redstone/black_bottom"
 				}
 			}
 		},
