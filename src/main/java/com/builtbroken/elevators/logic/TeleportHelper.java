@@ -17,6 +17,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,13 +37,20 @@ public class TeleportHelper
     /**
      * Tries to teleport the player up or down
      *
-     * @param entity
-     * @param direction
+     * @param entity       - entity to teleport
+     * @param direction    - direction to teleport
+     * @param blockToForce - optional block to force teleportation with
      */
-    public static boolean tryToTeleport(Entity entity, MoveDirection direction)
+    public static boolean tryToTeleport(Entity entity, MoveDirection direction, @Nullable Block blockToForce)
     {
         final World world = entity.getEntityWorld();
         final BlockPos fromPos = getPosUnderEntity(entity);
+
+        //Validate we are using the right block, used to limit different types of functionality
+        if (blockToForce != null && world.getBlockState(fromPos).getBlock() != blockToForce) //TODO find a better way to manage this
+        {
+            return false;
+        }
 
         //Get last teleport time
         long lastTeleportTime = 0;
@@ -203,7 +211,7 @@ public class TeleportHelper
             }
 
             //Check if elevator is valid
-            if (isElevator(currentState) && isSameType(currentState, fromState))
+            if (currentState.getBlock() == fromState.getBlock() && isSameType(currentState, fromState))
             {
                 if (!isDistanceValid(spaceBetweenElevators) || !isBlockSafeToTeleportTo(world, currentPos, entity))
                 {
@@ -271,19 +279,19 @@ public class TeleportHelper
     public static boolean isBlockPassable(World world, IBlockState blockState, BlockPos pos, Entity entity)
     {
         final Block block = blockState.getBlock();
-        if(!block.isCollidable() || block.isAir(blockState, world, pos))
+        if (!block.isCollidable() || block.isAir(blockState, world, pos))
         {
             return true;
         }
         //Check for empty bounding box
-        else if(blockState.getCollisionBoundingBox(world, pos) == Block.NULL_AABB)
+        else if (blockState.getCollisionBoundingBox(world, pos) == Block.NULL_AABB)
         {
             //Attempt to get sub boxes, some blocks will do null aabb in order to have a custom shape (fence)
             final List<AxisAlignedBB> boxes = new ArrayList();
             blockState.addCollisionBoxToList(world, pos, getBoundingBoxAtPosition(entity, pos), boxes, entity, false);
 
             //If empty then we have no collisions
-            if(boxes.isEmpty())
+            if (boxes.isEmpty())
             {
                 return true;
             }
@@ -299,7 +307,7 @@ public class TeleportHelper
 
     public static boolean isElevator(IBlockState blockState)
     {
-        return blockState.getBlock() == Elevators.ELEVATOR_BLOCK;
+        return blockState.getBlock() == Elevators.ELEVATOR_BLOCK || blockState.getBlock() == Elevators.ELEVATOR_BLOCK_REDSTONE;
     }
 
 }

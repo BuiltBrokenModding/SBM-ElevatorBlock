@@ -1,5 +1,6 @@
 package com.builtbroken.elevators.logic;
 
+import com.builtbroken.elevators.Elevators;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -43,7 +44,7 @@ public class PacketTryMovement implements IMessage
         {
             //TODO add check to prevent macro spam of server (player -> last try time, with config to change delay)
             FMLCommonHandler.instance().getWorldThread(context.netHandler).addScheduledTask(
-                    () -> TeleportHelper.tryToTeleport(context.getServerHandler().player, message.direction)
+                    () -> TeleportHelper.tryToTeleport(context.getServerHandler().player, message.direction, Elevators.ELEVATOR_BLOCK)
             );
             return null;
         }
