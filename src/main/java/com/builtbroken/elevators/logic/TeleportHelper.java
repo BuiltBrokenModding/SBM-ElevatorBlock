@@ -257,8 +257,7 @@ public class TeleportHelper
     public static boolean isNotColliding(World world, BlockPos pos, Entity entity)
     {
         AxisAlignedBB bb = getBoundingBoxAtPosition(entity, pos);
-        return !world.containsAnyLiquid(bb)
-                && world.getCollisionBoxes(entity, bb).isEmpty()
+        return  world.getCollisionBoxes(entity, bb).isEmpty()
                 && world.checkNoEntityCollision(bb, entity);
     }
 
