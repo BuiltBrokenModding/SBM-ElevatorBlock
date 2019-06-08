@@ -4,6 +4,11 @@ Simple and configurable elevator mod
 
 # Change Log
 
+## 1.3.1
+
+* Removed: Water collision check allowing for item transportation
+* Removed: Entity collision check fixing mobs blocking elevators
+
 ## 1.3.0
 
 * Added: Redstone version of the block
