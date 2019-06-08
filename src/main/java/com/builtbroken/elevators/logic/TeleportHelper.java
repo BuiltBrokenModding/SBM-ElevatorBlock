@@ -256,9 +256,16 @@ public class TeleportHelper
 
     public static boolean isNotColliding(World world, BlockPos pos, Entity entity)
     {
-        AxisAlignedBB bb = getBoundingBoxAtPosition(entity, pos);
-        return  world.getCollisionBoxes(entity, bb).isEmpty()
-                && world.checkNoEntityCollision(bb, entity);
+        int h = (int) Math.ceil(entity.height);
+        for (int i = 0; i < h; i++)
+        {
+            final BlockPos currentPos = pos.up(i);
+            if (!isBlockPassable(world, world.getBlockState(currentPos), currentPos, entity))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static AxisAlignedBB getBoundingBoxAtPosition(Entity entity, BlockPos pos)
